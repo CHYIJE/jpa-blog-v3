@@ -1,82 +1,58 @@
 package com.tenco.blog_v3.common;
 
+import com.tenco.blog_v3.common.Utils.ApiUtil;
 import com.tenco.blog_v3.common.errors.*;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
-
-@ControllerAdvice  // IoC 대상 ( 뷰 렌더링)
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+// 데이터 반환
+@RestControllerAdvice  // IoC 대상 ( 뷰 렌더링)
 public class GlobalExceptionHandler {
 
-    /**
-     * 400 Bad Request 예외 처리
-     * @param ex
-     * @param model
-     * @return
-     */
+    // 400 에러 처리 = return - json
     @ExceptionHandler(Exception400.class)
-    public ModelAndView handleException400(Exception400 ex, Model model) {
-        // templates/err/400.mustache
-        ModelAndView mav = new ModelAndView("err/400");
-        mav.addObject("msg", ex.getMessage());
-        return mav;
+    public ResponseEntity<?> handleException400(Exception400 e) {
+
+        ApiUtil<?> apiUtil = new ApiUtil<>(400, e.getMessage());
+
+        return new ResponseEntity<>(apiUtil, HttpStatus.BAD_REQUEST);
     }
 
-    /**
-     * 400 Bad Request 예외 처리
-     * @param ex
-     * @param model
-     * @return
-     */
+    // 401 에러 처리 = return - json
     @ExceptionHandler(Exception401.class)
-    public ModelAndView handleException401(Exception401 ex, Model model) {
-        // templates/err/400.mustache
-        ModelAndView mav = new ModelAndView("err/401");
-        mav.addObject("msg", ex.getMessage());
-        return mav;
+    public ResponseEntity<?> handleException401(Exception401 e) {
+
+        ApiUtil<?> apiUtil = new ApiUtil<>(401, e.getMessage());
+
+        return new ResponseEntity<>(apiUtil, HttpStatus.UNAUTHORIZED);
     }
 
-    /**
-     * 400 Bad Request 예외 처리
-     * @param ex
-     * @param model
-     * @return
-     */
+    // 403 에러 처리 = return - json
     @ExceptionHandler(Exception403.class)
-    public ModelAndView handleException403(Exception403 ex, Model model) {
-        // templates/err/400.mustache
-        ModelAndView mav = new ModelAndView("err/403");
-        mav.addObject("msg", ex.getMessage());
-        return mav;
+    public ResponseEntity<?> handleException403(Exception403 e) {
+
+        ApiUtil<?> apiUtil = new ApiUtil<>(403, e.getMessage());
+
+        return new ResponseEntity<>(apiUtil, HttpStatus.FORBIDDEN);
     }
 
-    /**
-     * 400 Bad Request 예외 처리
-     * @param ex
-     * @param model
-     * @return
-     */
+    // 404 에러 처리 = return - json
     @ExceptionHandler(Exception404.class)
-    public ModelAndView handleException404(Exception404 ex, Model model) {
-        // templates/err/400.mustache
-        ModelAndView mav = new ModelAndView("err/404");
-        mav.addObject("msg", ex.getMessage());
-        return mav;
+    public ResponseEntity<?> handleException404(Exception404 e) {
+
+        ApiUtil<?> apiUtil = new ApiUtil<>(404, e.getMessage());
+
+        return new ResponseEntity<>(apiUtil, HttpStatus.NOT_FOUND);
     }
 
-    /**
-     * 400 Bad Request 예외 처리
-     * @param ex
-     * @param model
-     * @return
-     */
+    // 500 에러 처리 = return - json
     @ExceptionHandler(Exception500.class)
-    public ModelAndView handleException500(Exception500 ex, Model model) {
-        // templates/err/400.mustache
-        ModelAndView mav = new ModelAndView("err/500");
-        mav.addObject("msg", ex.getMessage());
-        return mav;
+    public ResponseEntity<?> handleException500(Exception500 e) {
+
+        ApiUtil<?> apiUtil = new ApiUtil<>(500, e.getMessage());
+
+        return new ResponseEntity<>(apiUtil, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
